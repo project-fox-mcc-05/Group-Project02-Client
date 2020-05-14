@@ -43,7 +43,7 @@
           <button class="btn btn-lg btn-success btn-block text-white" @click.prevent="showResult">Liat Hasil</button>
         </div>
         <div v-else>
-          <button class="btn btn-lg btn-primary btn-block text-white" @click.prevent="nextQuestion">Soal Selanjutnya</button>
+          <button class="btn btn-lg btn-primary btn-block text-white" @click.prevent="changeCurrentQuestionNumber">Soal Selanjutnya</button>
         </div>
       </div>
     </div>
@@ -52,39 +52,16 @@
 </template>
 
 <script>
+import socket from '../config/socket'
+
 export default {
   name: 'QuestionCard',
+  props: ['question'],
   data () {
     return {
       currentScore: 0,
       isFinish: false,
-      soal: {
-        id: 1,
-        question: 'apakah ibukota indonesia',
-        image: 'https://cdn1-production-images-kly.akamaized.net/vX4BCdiIcVMtPy8gPnsdDisTIOg=/640x360/smart/filters:quality(75):strip_icc():format(jpeg)/kly-media-production/medias/3007708/original/018445100_1577552907-WhatsApp_Image_2019-12-28_at_22.47.36.jpeg',
-        answers: [
-          {
-            option: 'A',
-            text: 'New York',
-            answer: false
-          },
-          {
-            option: 'B',
-            text: 'Tokyo',
-            answer: false
-          },
-          {
-            option: 'C',
-            text: 'Jakarta',
-            answer: true
-          },
-          {
-            option: 'D',
-            text: 'Singapura',
-            answer: false
-          }
-        ]
-      }
+      soal: this.question
     }
   },
   methods: {
@@ -97,8 +74,13 @@ export default {
         console.log('skor ga nambah')
       }
     },
-    nextQuestion () {
-      console.log(this.soal.id + 1)
+    sendScore () {
+      const username = localStorage.namapemain
+      const score = this.currentScore
+      socket.emit('changeScore', username, score)
+    },
+    changeCurrentQuestionNumber () {
+      this.$emit('changeCurrentQuestionNumber')
     },
     showResult () {
       console.log('menuju halaman result')
@@ -119,6 +101,7 @@ export default {
   created () {
     setTimeout(() => {
       this.isFinish = true
+      this.sendScore()
     }, 5000)
   }
 }

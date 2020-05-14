@@ -20,7 +20,11 @@
         <p>Time here</p>
       </div>
     </div>
-    <QuestionCard></QuestionCard>
+    <QuestionCard
+    :question="questionList[currentQuestionNumber]"
+    :currentQuestionNumber="currentQuestionNumber"
+    @changeCurrentPage="changeCurrentPage"
+    ></QuestionCard>
   </div>
   <div v-if="isResult === true">
     <Result></Result>
@@ -43,17 +47,22 @@ export default {
     return {
       roomName: '',
       allRooms: [],
-      questionList: '', // butuh data seluruh soal
-      currentQuestion: 0, // index dr array list question
       isPlay: false,
       isResult: false
-      // dari store: currentUser, currentUserScore
+    }
+  },
+  computed: {
+    usersList () {
+      return this.$store.state.usersList
+    },
+    questionList () {
+      return this.$store.state.questionList
+    },
+    currentQuestionNumber () {
+      return this.$store.state.currentQuestionNumber
     }
   },
   methods: {
-    nextQuestion () {
-      this.currentQuestion += 1 // harusnya watch dr store
-    },
     playNow () {
       this.isPlay = true
     },
@@ -64,11 +73,40 @@ export default {
       socket.on('updateScore', (rooms) => {
         this.allRooms = rooms
       })
+    },
+    fetchUsers () {
+      socket.emit('fetchUsers')
+    },
+    getUsersFromServer () {
+      socket.on('fetchUsers', (data) => {
+        this.$store.commit('changeUserList', data)
+      })
+    },
+    fetchQuestions () {
+      socket.emit('fetchQuestions')
+    },
+    getQuestionsFromServer () {
+      socket.on('fetchQuestions', (data) => {
+        this.$store.commit('changeQuestionList', data)
+      })
+    },
+    changeCurrentQuestionNumber () {
+      this.currentQuestionNumber += 1
+      socket.emit('changeCurrentQuestionNumber', this.currentQuestionNumber)
+    },
+    getCurrentPage () {
+      socket.on('changeCurrentQuestionNumber', (data) => {
+        this.$store.commit('currentQuestionNumber')
+      })
     }
   },
   created () {
     this.fetchRooms()
     this.socketKirim()
+    this.fetchUsers()
+    this.getUsersFromServer()
+    this.fetchQuestions()
+    this.getQuestionsFromServer()
   }
 }
 </script>
