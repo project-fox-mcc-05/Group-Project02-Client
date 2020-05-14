@@ -21,9 +21,9 @@
       </div>
     </div>
     <QuestionCard
-    :question="questionList[currentQuestionNumber]"
+    :question="question"
     :currentQuestionNumber="currentQuestionNumber"
-    @changeCurrentPage="changeCurrentPage"
+    @changeCurrentQuestionNumber="changeCurrentQuestionNumber"
     ></QuestionCard>
   </div>
   <div v-if="isResult === true">
@@ -60,6 +60,9 @@ export default {
     },
     currentQuestionNumber () {
       return this.$store.state.currentQuestionNumber
+    },
+    question () {
+      return this.$store.state.questionList[this.$store.state.currentQuestionNumber]
     }
   },
   methods: {
@@ -91,11 +94,11 @@ export default {
       })
     },
     changeCurrentQuestionNumber () {
-      this.currentQuestionNumber += 1
-      socket.emit('changeCurrentQuestionNumber', this.currentQuestionNumber)
+      this.$store.commit('changeCurrentQuestionNumber')
+      // socket.emit('nextQuestion', this.currentQuestionNumber)
     },
     getCurrentPage () {
-      socket.on('changeCurrentQuestionNumber', (data) => {
+      socket.on('nextQuestion', (data) => {
         this.$store.commit('currentQuestionNumber')
       })
     }

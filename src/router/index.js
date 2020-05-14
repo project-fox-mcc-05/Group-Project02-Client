@@ -14,7 +14,14 @@ const routes = [
   {
     path: '/dashboard',
     name: 'Dashboard',
-    component: Dashboard
+    component: Dashboard,
+    beforeEnter: (to, from, next) => {
+      if (localStorage.namapemain) {
+        next()
+      } else {
+        next('/')
+      }
+    }
   }
 ]
 
