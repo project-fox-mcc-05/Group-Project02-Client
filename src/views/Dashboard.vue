@@ -47,11 +47,19 @@ export default {
     return {
       roomName: '',
       allRooms: [],
-      usersList: this.$store.state.usersList,
-      questionList: this.$store.state.questionList,
-      currentQuestionNumber: this.$store.state.currentQuestionNumber,
       isPlay: false,
       isResult: false
+    }
+  },
+  computed: {
+    usersList () {
+      return this.$store.state.usersList
+    },
+    questionList () {
+      return this.$store.state.questionList
+    },
+    currentQuestionNumber () {
+      return this.$store.state.currentQuestionNumber
     }
   },
   methods: {
