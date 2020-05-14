@@ -23,7 +23,6 @@
     <QuestionCard
     :question="question"
     :currentQuestionNumber="currentQuestionNumber"
-    @changeCurrentQuestionNumber="changeCurrentQuestionNumber"
     ></QuestionCard>
   </div>
   <div v-if="isResult === true">
@@ -68,6 +67,7 @@ export default {
   methods: {
     playNow () {
       this.isPlay = true
+      socket.emit('startTogether')
     },
     fetchRooms () {
       socket.emit('updateScore', 1)
@@ -93,10 +93,6 @@ export default {
         this.$store.commit('changeQuestionList', data)
       })
     },
-    changeCurrentQuestionNumber () {
-      this.$store.commit('changeCurrentQuestionNumber')
-      // socket.emit('nextQuestion', this.currentQuestionNumber)
-    },
     getCurrentPage () {
       socket.on('nextQuestion', (data) => {
         this.$store.commit('currentQuestionNumber')
@@ -110,6 +106,11 @@ export default {
     this.getUsersFromServer()
     this.fetchQuestions()
     this.getQuestionsFromServer()
+    socket.on('startTogether', (data) => {
+      if (data) {
+        this.isPlay = true
+      }
+    })
   }
 }
 </script>

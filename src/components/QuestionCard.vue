@@ -56,7 +56,7 @@ import socket from '../config/socket'
 
 export default {
   name: 'QuestionCard',
-  props: ['question'],
+  props: ['question', 'currentQuestionNumber'],
   data () {
     return {
       currentScore: 0,
@@ -84,7 +84,10 @@ export default {
     changeCurrentQuestionNumber () {
       this.currentScore = 0
       this.alreadyAnswered = false
-      this.$emit('changeCurrentQuestionNumber')
+
+      socket.emit('nextQuestion', this.currentQuestionNumber)
+      this.$store.commit('changeCurrentQuestionNumber')
+
       this.isFinish = false
       setTimeout(() => {
         this.isFinish = true
@@ -93,6 +96,7 @@ export default {
     },
     showResult () {
       console.log('menuju halaman result')
+      socket.emit('showResultTogether')
     }
   },
   computed: {
@@ -113,6 +117,17 @@ export default {
       this.isFinish = true
       this.sendScore()
     }, 5000)
+    socket.on('nextQuestion', (data) => {
+      this.$store.commit('changeCurrentQuestionNumber')
+      this.isFinish = false
+      setTimeout(() => {
+        this.isFinish = true
+        this.sendScore()
+      }, 5000)
+    })
+    socket.on('showResultTogether', (data) => {
+      console.log('menuju halaman result')
+    })
   }
 }
 </script>

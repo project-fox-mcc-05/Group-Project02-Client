@@ -28,7 +28,7 @@ export default {
     },
     enterGame () {
       localStorage.setItem('namapemain', this.namapemain)
-      socket.emit('fetchRooms', this.namapemain)
+      socket.emit('fetchUsers', this.namapemain)
       this.namapemain = ''
       this.$store.commit('changeWaitingRoom', true)
       this.playingAudio()
