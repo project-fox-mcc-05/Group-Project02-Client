@@ -17,7 +17,7 @@
                     </tr>
                 </tbody>
             </table>
-            <button v-show="button" @click.prevent="goToDashboard" class="btn btn-dark">Start Game</button>
+            <a v-show="button" @click.prevent="goToDashboard" class="btn btn-dark" href="">Start Game</a>
         </div>
     </div>
 </template>
