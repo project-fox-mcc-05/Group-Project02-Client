@@ -13,7 +13,7 @@
                 <tbody>
                     <tr v-for="(user, i) in users" :key="i">
                         <td class="mt-4">{{ i + 1 }}</td>
-                        <td class="mt-4">{{ user }}</td>
+                        <td class="mt-4">{{ user.name }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -40,12 +40,19 @@ export default {
   },
   methods: {
     goToDashboard () {
+      socket.emit('dashboardTogether')
       this.$router.push('/dashboard')
     }
   },
   created () {
-    socket.on('fetchRooms', (data) => {
+    socket.on('fetchUsers', (data) => {
       this.users = data
+      this.$store.commit('changeUserList', data)
+    })
+    socket.on('dashboardTogether', (data) => {
+      if (data) {
+        this.$router.push('/dashboard')
+      }
     })
   }
 }
