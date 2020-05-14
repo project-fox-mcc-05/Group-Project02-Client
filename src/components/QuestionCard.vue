@@ -3,35 +3,35 @@
     <div class="card bg-white text-dark">
       <div class="row">
         <div class="col center">
-          <h3 class="text-center">{{ soal.id }}</h3>
+          <h3 class="text-center">{{ question.id }}</h3>
           <div class="col center">
-            <img v-if="soal.image" :src="soal.image" alt="">
+            <img v-if="question.image" :src="question.image" alt="">
           </div>
-          <p class="text-center">{{ soal.question}}</p>
+          <p class="text-center">{{ question.question}}</p>
         </div>
       </div>
       <div>
         <div class="row pb-3">
           <div class="col">
             <div class="card">
-              <button class="btn btn-secondary btn-lg btn-block" @click.prevent="userClick(soal.answers[0].answer)">{{ soal.answers[0].option }}. {{soal.answers[0].text}}</button>
+              <button class="btn btn-secondary btn-lg btn-block" @click.prevent="userClick(question.answers[0].answer)">{{ question.answers[0].option }}. {{question.answers[0].text}}</button>
             </div>
           </div>
           <div class="col">
             <div class="card">
-              <button class="btn btn-secondary btn-lg btn-block" @click.prevent="userClick(soal.answers[1].answer)">{{ soal.answers[1].option }}. {{soal.answers[1].text}}</button>
+              <button class="btn btn-secondary btn-lg btn-block" @click.prevent="userClick(question.answers[1].answer)">{{ question.answers[1].option }}. {{question.answers[1].text}}</button>
             </div>
           </div>
         </div>
         <div class="row pb-3">
           <div class="col">
             <div class="card">
-              <button class="btn btn-secondary btn-lg btn-block" @click.prevent="userClick(soal.answers[2].answer)">{{ soal.answers[2].option }}. {{soal.answers[2].text}}</button>
+              <button class="btn btn-secondary btn-lg btn-block" @click.prevent="userClick(question.answers[2].answer)">{{ question.answers[2].option }}. {{question.answers[2].text}}</button>
             </div>
           </div>
           <div class="col">
             <div class="card">
-              <button class="btn btn-secondary btn-lg btn-block" @click.prevent="userClick(soal.answers[3].answer)">{{ soal.answers[3].option }}. {{soal.answers[3].text}}</button>
+              <button class="btn btn-secondary btn-lg btn-block" @click.prevent="userClick(question.answers[3].answer)">{{ question.answers[3].option }}. {{question.answers[3].text}}</button>
             </div>
           </div>
         </div>
@@ -39,11 +39,11 @@
       <div v-if="isFinish === true">
         <p class="text-center">Jawaban: </p>
         <p class="text-center"> {{ trueAnswer.option}} - {{trueAnswer.text}} </p>
-        <div v-if="soal.id == 10">
+        <div v-if="question.id == 10">
           <button class="btn btn-lg btn-success btn-block text-white" @click.prevent="showResult">Liat Hasil</button>
         </div>
         <div v-else>
-          <button class="btn btn-lg btn-primary btn-block text-white" @click.prevent="changeCurrentQuestionNumber">Soal Selanjutnya</button>
+          <button class="btn btn-lg btn-primary btn-block text-white" @click.prevent="changeCurrentQuestionNumber">question Selanjutnya</button>
         </div>
       </div>
     </div>
@@ -60,8 +60,7 @@ export default {
   data () {
     return {
       currentScore: 0,
-      isFinish: false,
-      soal: this.question
+      isFinish: false
     }
   },
   methods: {
@@ -89,16 +88,16 @@ export default {
   computed: {
     trueAnswer () {
       let correctAnswer = null
-      for (let i = 0; i < this.soal.answers.length; i++) {
-        if (this.soal.answers[i].answer) {
-          correctAnswer = this.soal.answers[i]
+      for (let i = 0; i < this.question.answers.length; i++) {
+        if (this.question.answers[i].answer) {
+          correctAnswer = this.question.answers[i]
           break
         }
       }
       return correctAnswer
     }
   },
-  created () {
+  mounted () {
     setTimeout(() => {
       this.isFinish = true
       this.sendScore()

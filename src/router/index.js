@@ -14,7 +14,7 @@ const routes = [
   {
     path: '/dashboard',
     name: 'Dashboard',
-    component: () => import('../views/Dashboard.vue'),
+    component: Dashboard,
     beforeEnter: (to, from, next) => {
       if (localStorage.namapemain) {
         next()
