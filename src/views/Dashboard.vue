@@ -111,6 +111,9 @@ export default {
         this.isPlay = true
       }
     })
+    socket.on('showResultTogether', (data) => {
+      this.isResult = true
+    })
   }
 }
 </script>
