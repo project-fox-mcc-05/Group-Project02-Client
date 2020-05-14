@@ -1,5 +1,6 @@
 <template>
 <div class="container center pt-5">
+  <Rooms></Rooms>
   <div v-if="isPlay === false">
     <h4 class="text-center">Rules</h4>
     <ul>
@@ -28,16 +29,20 @@
 </template>
 
 <script>
+import Rooms from '../components/Rooms'
 import QuestionCard from '../components/QuestionCard'
 import Result from '../components/Result'
+import socket from '../config/socket'
 
 export default {
   name: 'Dashboard',
   components: {
-    QuestionCard, Result
+    QuestionCard, Result, Rooms
   },
   data () {
     return {
+      roomName: '',
+      allRooms: [],
       questionList: '', // butuh data seluruh soal
       currentQuestion: 0, // index dr array list question
       isPlay: false,
@@ -52,12 +57,18 @@ export default {
     playNow () {
       this.isPlay = true
     },
-    createRoom () {
-      // socket.emit('create-room', 'halo')
+    fetchRooms () {
+      socket.emit('updateScore', 1)
     },
-    fetchRoom () {
-      // socket.emit('fetch-room', 'halo')
+    socketKirim () {
+      socket.on('updateScore', (rooms) => {
+        this.allRooms = rooms
+      })
     }
+  },
+  created () {
+    this.fetchRooms()
+    this.socketKirim()
   }
 }
 </script>

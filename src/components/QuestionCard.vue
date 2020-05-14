@@ -1,6 +1,6 @@
 <template>
-  <div class="container pt-5">
-    <div class="card bg-dark text-white">
+  <div class="container pt-5 pb-5">
+    <div class="card bg-white text-dark">
       <div class="row">
         <div class="col center">
           <h3 class="text-center">{{ soal.id }}</h3>
@@ -11,38 +11,39 @@
         </div>
       </div>
       <div>
-        <div class="row">
+        <div class="row pb-3">
           <div class="col">
             <div class="card">
-              <button class="btn btn-lg btn-block" @click.prevent="userClick(soal.answers[0].answer)">{{ soal.answers[0].option }}. {{soal.answers[0].text}}</button>
+              <button class="btn btn-secondary btn-lg btn-block" @click.prevent="userClick(soal.answers[0].answer)">{{ soal.answers[0].option }}. {{soal.answers[0].text}}</button>
             </div>
           </div>
           <div class="col">
             <div class="card">
-              <button class="btn btn-lg btn-block" @click.prevent="userClick(soal.answers[1].answer)">{{ soal.answers[1].option }}. {{soal.answers[1].text}}</button>
+              <button class="btn btn-secondary btn-lg btn-block" @click.prevent="userClick(soal.answers[1].answer)">{{ soal.answers[1].option }}. {{soal.answers[1].text}}</button>
             </div>
           </div>
         </div>
-        <div class="row">
+        <div class="row pb-3">
           <div class="col">
             <div class="card">
-              <button class="btn btn-lg btn-block" @click.prevent="userClick(soal.answers[2].answer)">{{ soal.answers[2].option }}. {{soal.answers[2].text}}</button>
+              <button class="btn btn-secondary btn-lg btn-block" @click.prevent="userClick(soal.answers[2].answer)">{{ soal.answers[2].option }}. {{soal.answers[2].text}}</button>
             </div>
           </div>
           <div class="col">
             <div class="card">
-              <button class="btn btn-lg btn-block" @click.prevent="userClick(soal.answers[3].answer)">{{ soal.answers[3].option }}. {{soal.answers[3].text}}</button>
+              <button class="btn btn-secondary btn-lg btn-block" @click.prevent="userClick(soal.answers[3].answer)">{{ soal.answers[3].option }}. {{soal.answers[3].text}}</button>
             </div>
           </div>
         </div>
       </div>
       <div v-if="isFinish === true">
-        <p class="text-center"> {{ trueAnswer.option}} {{trueAnswer.text}} </p>
+        <p class="text-center">Jawaban: </p>
+        <p class="text-center"> {{ trueAnswer.option}} - {{trueAnswer.text}} </p>
         <div v-if="soal.id == 10">
-          <button class="btn btn-lg btn-block text-white" @click.prevent="showResult">Liat Hasil</button>
+          <button class="btn btn-lg btn-success btn-block text-white" @click.prevent="showResult">Liat Hasil</button>
         </div>
         <div v-else>
-          <button class="btn btn-lg btn-block text-white" @click.prevent="nextQuestion">Soal Selanjutnya</button>
+          <button class="btn btn-lg btn-primary btn-block text-white" @click.prevent="nextQuestion">Soal Selanjutnya</button>
         </div>
       </div>
     </div>
@@ -89,11 +90,11 @@ export default {
   methods: {
     userClick (answer) {
       if (answer === true) {
-        console.log('skor tambah 1')
         this.currentScore = 1
+        console.log('skor tambah 1')
       } else {
-        console.log('skor ga nambah')
         this.currentScore = 0
+        console.log('skor ga nambah')
       }
     },
     nextQuestion () {
