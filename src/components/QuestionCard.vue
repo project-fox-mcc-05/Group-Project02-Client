@@ -43,7 +43,7 @@
           <button class="btn btn-lg btn-success btn-block text-white" @click.prevent="showResult">Liat Hasil</button>
         </div>
         <div v-else>
-          <button class="btn btn-lg btn-primary btn-block text-white" @click.prevent="changeCurrentQuestionNumber">question Selanjutnya</button>
+          <button class="btn btn-lg btn-primary btn-block text-white" @click.prevent="changeCurrentQuestionNumber">Lanjut</button>
         </div>
       </div>
     </div>
@@ -97,6 +97,10 @@ export default {
     showResult () {
       console.log('menuju halaman result')
       socket.emit('showResultTogether')
+    },
+    backToHomeTogether () {
+      socket.emit('backToHomeTogether')
+      this.$router.push('/')
     }
   },
   computed: {
@@ -125,8 +129,8 @@ export default {
         this.sendScore()
       }, 5000)
     })
-    socket.on('showResultTogether', (data) => {
-      console.log('menuju halaman result')
+    socket.on('backToHomeTogether', (data) => {
+      this.$router.push('/')
     })
   }
 }
