@@ -11,6 +11,14 @@
     <button class="btn btn-success btn-lg btn-block" @click.prevent="playNow">PLAY</button>
   </div>
   <div v-if="isPlay === true">
+    <div class="row text-center">
+      <div class="col">
+        <p>Current score here</p>
+      </div>
+      <div class="col">
+        <p>Time here</p>
+      </div>
+    </div>
     <QuestionCard></QuestionCard>
   </div>
   <div v-if="isResult === true">

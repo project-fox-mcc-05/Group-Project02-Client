@@ -36,11 +36,14 @@
           </div>
         </div>
       </div>
-      <div v-if="soal.id == 10">
-        <button class="btn btn-lg btn-block text-white" @click.prevent="showResult">Liat Hasil</button>
-      </div>
-      <div v-else>
-        <button class="btn btn-lg btn-block text-white" @click.prevent="nextQuestion">Soal Selanjutnya</button>
+      <div v-if="isFinish === true">
+        <p class="text-center"> {{ trueAnswer.option}} {{trueAnswer.text}} </p>
+        <div v-if="soal.id == 10">
+          <button class="btn btn-lg btn-block text-white" @click.prevent="showResult">Liat Hasil</button>
+        </div>
+        <div v-else>
+          <button class="btn btn-lg btn-block text-white" @click.prevent="nextQuestion">Soal Selanjutnya</button>
+        </div>
       </div>
     </div>
 
@@ -87,9 +90,10 @@ export default {
     userClick (answer) {
       if (answer === true) {
         console.log('skor tambah 1')
-        this.currentScore += 1
+        this.currentScore = 1
       } else {
         console.log('skor ga nambah')
+        this.currentScore = 0
       }
     },
     nextQuestion () {
@@ -98,6 +102,23 @@ export default {
     showResult () {
       console.log('menuju halaman result')
     }
+  },
+  computed: {
+    trueAnswer () {
+      let correctAnswer = null
+      for (let i = 0; i < this.soal.answers.length; i++) {
+        if (this.soal.answers[i].answer) {
+          correctAnswer = this.soal.answers[i]
+          break
+        }
+      }
+      return correctAnswer
+    }
+  },
+  created () {
+    setTimeout(() => {
+      this.isFinish = true
+    }, 5000)
   }
 }
 </script>
