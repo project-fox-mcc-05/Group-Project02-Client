@@ -36,7 +36,7 @@ export default {
   }
 }
 </script>
-<style>
+<style scoped>
     @import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
     @import url('https://fonts.googleapis.com/css2?family=Pangolin&display=swap');
     p {
