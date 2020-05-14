@@ -60,16 +60,19 @@ export default {
   data () {
     return {
       currentScore: 0,
-      isFinish: false
+      isFinish: false,
+      alreadyAnswered: false
     }
   },
   methods: {
     userClick (answer) {
-      if (answer === true) {
-        this.currentScore = 1
+      if (answer === true && this.alreadyAnswered === false) {
+        this.currentScore += 1
+        this.alreadyAnswered = true
         console.log('skor tambah 1')
       } else {
-        this.currentScore = 0
+        this.currentScore += 0
+        this.alreadyAnswered = true
         console.log('skor ga nambah')
       }
     },
@@ -79,7 +82,14 @@ export default {
       socket.emit('changeScore', username, score)
     },
     changeCurrentQuestionNumber () {
+      this.currentScore = 0
+      this.alreadyAnswered = false
       this.$emit('changeCurrentQuestionNumber')
+      this.isFinish = false
+      setTimeout(() => {
+        this.isFinish = true
+        this.sendScore()
+      }, 5000)
     },
     showResult () {
       console.log('menuju halaman result')
@@ -97,7 +107,8 @@ export default {
       return correctAnswer
     }
   },
-  mounted () {
+  created () {
+    this.isFinish = false
     setTimeout(() => {
       this.isFinish = true
       this.sendScore()
