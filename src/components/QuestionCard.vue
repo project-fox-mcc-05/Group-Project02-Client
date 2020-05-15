@@ -39,7 +39,7 @@
       <div v-if="isFinish === true">
         <p class="text-center">Jawaban: </p>
         <p class="text-center"> {{ trueAnswer.option}} - {{trueAnswer.text}} </p>
-        <div v-if="question.id == 10">
+        <div v-if="currentQuestionNumber == 9">
           <button class="btn btn-lg btn-success btn-block text-white" @click.prevent="showResult">Liat Hasil</button>
         </div>
         <div v-else>
@@ -76,23 +76,29 @@ export default {
         console.log('skor ga nambah')
       }
     },
-    sendScore () {
+    addScore () {
+      this.$store.commit('changeTotalScore', this.currentScore)
+    },
+    updateScore () {
       const username = localStorage.namapemain
-      const score = this.currentScore
-      socket.emit('changeScore', username, score)
+      const score = this.totalScore
+      const payload = {
+        name: username,
+        totalScore: score
+      }
+      socket.emit('updateScore', payload)
     },
     changeCurrentQuestionNumber () {
-      this.currentScore = 0
+      // this.currentScore = 0
       this.alreadyAnswered = false
 
       socket.emit('nextQuestion', this.currentQuestionNumber)
-      this.$store.commit('changeCurrentQuestionNumber')
 
-      this.isFinish = false
-      setTimeout(() => {
-        this.isFinish = true
-        this.sendScore()
-      }, 5000)
+      // this.isFinish = false
+      // setTimeout(() => {
+      //   this.isFinish = true
+      //   this.addScore()
+      // }, 5000)
     },
     showResult () {
       console.log('menuju halaman result')
@@ -113,24 +119,31 @@ export default {
         }
       }
       return correctAnswer
+    },
+    totalScore () {
+      return this.$store.state.totalScore
     }
   },
   created () {
     this.isFinish = false
     setTimeout(() => {
       this.isFinish = true
-      this.sendScore()
+      this.addScore()
     }, 5000)
     socket.on('nextQuestion', (data) => {
+      this.currentScore = 0
       this.$store.commit('changeCurrentQuestionNumber')
       this.isFinish = false
       setTimeout(() => {
         this.isFinish = true
-        this.sendScore()
+        this.addScore()
       }, 5000)
     })
     socket.on('backToHomeTogether', (data) => {
       this.$router.push('/')
+    })
+    socket.on('showResultTogether', (data) => {
+      this.updateScore()
     })
   }
 }
