@@ -22,7 +22,7 @@ export default {
   methods: {
     playingAudio () {
       const sound = new Howl({
-        src: ['../assets/lobby-classic-game.mp3']
+        src: ['https://storage.cloud.google.com/mp3players/lobby-classic-game.mp3']
       })
       sound.play()
     },
