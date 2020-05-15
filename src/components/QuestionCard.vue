@@ -89,7 +89,7 @@ export default {
       socket.emit('updateScore', payload)
     },
     changeCurrentQuestionNumber () {
-      this.currentScore = 0
+      // this.currentScore = 0
       this.alreadyAnswered = false
 
       socket.emit('nextQuestion', this.currentQuestionNumber)
@@ -131,6 +131,7 @@ export default {
       this.addScore()
     }, 5000)
     socket.on('nextQuestion', (data) => {
+      this.currentScore = 0
       this.$store.commit('changeCurrentQuestionNumber')
       this.isFinish = false
       setTimeout(() => {
