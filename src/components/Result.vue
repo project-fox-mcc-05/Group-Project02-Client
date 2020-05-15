@@ -1,8 +1,10 @@
 <template>
   <div class="container center">
-    <h2>Result</h2>
+    <div>
+      <h2>Result</h2>
+    </div>
     <div v-for="(user,i) in users" :key="i">
-      <p v-if="user.name">{{ user.name }} ===> {{ user.score }}</p>
+      <h3 v-if="user.name">{{ user.name }} ===> {{ user.score }}</h3>
     </div>
     <button class="btn btn-primary btn-lg" @click.prevent="backToHomeTogether">Back Home</button>
   </div>
