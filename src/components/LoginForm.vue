@@ -11,7 +11,6 @@
 </template>
 
 <script>
-import { Howl } from 'howler'
 import socket from '../config/socket'
 export default {
   data () {
@@ -21,10 +20,8 @@ export default {
   },
   methods: {
     playingAudio () {
-      const sound = new Howl({
-        src: ['https://storage.cloud.google.com/mp3players/lobby-classic-game.mp3']
-      })
-      sound.play()
+      const audio = new Audio('https://mp3players.s3.us-east-2.amazonaws.com/lobby-classic-game.mp3')
+      audio.play()
     },
     enterGame () {
       if (this.$store.state.isPlay === false) {
