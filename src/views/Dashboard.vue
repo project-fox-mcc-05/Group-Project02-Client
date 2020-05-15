@@ -48,7 +48,6 @@ export default {
     return {
       roomName: '',
       allRooms: [],
-      isPlay: false,
       isResult: false
     }
   },
@@ -64,11 +63,14 @@ export default {
     },
     question () {
       return this.$store.state.questionList[this.$store.state.currentQuestionNumber]
+    },
+    isPlay () {
+      return this.$store.state.isPlay
     }
   },
   methods: {
     playNow () {
-      this.isPlay = true
+      this.$store.commit('changePlayStatus', true)
       socket.emit('startTogether')
     },
     fetchRooms () {
@@ -110,7 +112,7 @@ export default {
     this.getQuestionsFromServer()
     socket.on('startTogether', (data) => {
       if (data) {
-        this.isPlay = true
+        this.$store.commit('changePlayStatus', true)
       }
     })
     socket.on('showResultTogether', (data) => {
