@@ -8,7 +8,8 @@ export default new Vuex.Store({
     waitingRoom: false,
     usersList: [],
     questionList: [],
-    currentQuestionNumber: 0
+    currentQuestionNumber: 0,
+    isPlay: false
   },
   mutations: {
     changeWaitingRoom (state, payload) {
@@ -22,6 +23,9 @@ export default new Vuex.Store({
     },
     changeCurrentQuestionNumber (state) {
       state.currentQuestionNumber += 1
+    },
+    changePlayStatus (state, payload) {
+      state.isPlay = payload
     }
   },
   actions: {
