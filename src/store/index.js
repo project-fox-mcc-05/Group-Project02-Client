@@ -6,6 +6,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     waitingRoom: false,
+    totalScore: 0,
     usersList: [],
     questionList: [],
     currentQuestionNumber: 0
@@ -22,6 +23,9 @@ export default new Vuex.Store({
     },
     changeCurrentQuestionNumber (state) {
       state.currentQuestionNumber += 1
+    },
+    changeTotalScore (state, payload) {
+      state.totalScore += payload
     }
   },
   actions: {

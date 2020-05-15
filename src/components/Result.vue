@@ -1,6 +1,9 @@
 <template>
   <div>
     <h2>Result</h2>
+    <div v-for="(user,i) in users" :key="i">
+      <p v-if="user.name">{{ user.name }} ===> {{ user.score }}</p>
+    </div>
     <button class="btn btn-primary btn-lg" @click.prevent="backToHomeTogether">Back Home</button>
   </div>
 </template>
@@ -23,7 +26,11 @@ export default {
     }
   },
   created () {
+    socket.on('updateScore', (data) => {
+      this.users = data
+    })
     socket.on('backToHomeTogether', (data) => {
+      localStorage.namapemain = ''
       this.$router.push('/')
     })
   }

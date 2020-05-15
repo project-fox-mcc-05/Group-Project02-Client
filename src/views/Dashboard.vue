@@ -15,7 +15,8 @@
     <div v-if="isPlay === true">
       <div class="row text-center">
         <div class="col">
-          <p>Current score here</p>
+          <p>Your Total Score</p>
+          <p>{{ totalScore }}</p>
         </div>
         <div class="col">
           <p>Time here</p>
@@ -64,6 +65,9 @@ export default {
     },
     question () {
       return this.$store.state.questionList[this.$store.state.currentQuestionNumber]
+    },
+    totalScore () {
+      return this.$store.state.totalScore
     }
   },
   methods: {
