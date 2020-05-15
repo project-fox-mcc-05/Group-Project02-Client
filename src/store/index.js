@@ -9,7 +9,8 @@ export default new Vuex.Store({
     totalScore: 0,
     usersList: [],
     questionList: [],
-    currentQuestionNumber: 0
+    currentQuestionNumber: 0,
+    isPlay: false
   },
   mutations: {
     changeWaitingRoom (state, payload) {
@@ -26,6 +27,9 @@ export default new Vuex.Store({
     },
     changeTotalScore (state, payload) {
       state.totalScore += payload
+    },
+    changePlayStatus (state, payload) {
+      state.isPlay = payload
     }
   },
   actions: {

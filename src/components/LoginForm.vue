@@ -27,11 +27,20 @@ export default {
       sound.play()
     },
     enterGame () {
-      localStorage.setItem('namapemain', this.namapemain)
-      socket.emit('fetchUsers', this.namapemain)
-      this.namapemain = ''
-      this.$store.commit('changeWaitingRoom', true)
-      this.playingAudio()
+      if (this.$store.state.isPlay === false) {
+        localStorage.setItem('namapemain', this.namapemain)
+        socket.emit('fetchUsers', this.namapemain)
+        this.namapemain = ''
+        this.$store.commit('changeWaitingRoom', true)
+        this.playingAudio()
+      } else {
+        const Swal = require('sweetalert2')
+        Swal.fire({
+          icon: 'error',
+          title: 'Sorry...',
+          text: 'Room already started'
+        })
+      }
     }
   }
 }
