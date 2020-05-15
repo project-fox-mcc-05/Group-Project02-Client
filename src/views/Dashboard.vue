@@ -1,9 +1,8 @@
 <template>
 <div>
-  <div class="container center pt-5">
-    <Rooms></Rooms>
+  <div class="container center pt-5 text-white" id="dashboardPage">
     <div v-if="isPlay === false">
-      <h4 class="text-center">Rules</h4>
+      <h2 class="text-center">Rules</h2>
       <ul>
         <li>Jumlah soal sebanyak 10</li>
         <li>Tiap soal diberi waktu sebanyak 10 detik</li>
@@ -15,11 +14,8 @@
     <div v-if="isPlay === true">
       <div class="row text-center">
         <div class="col">
-          <p>Your Total Score</p>
-          <p>{{ totalScore }}</p>
-        </div>
-        <div class="col">
-          <p>Time here</p>
+          <h4>Your Total Score</h4>
+          <h2>{{ totalScore }}</h2>
         </div>
       </div>
       <QuestionCard
@@ -35,7 +31,6 @@
 </template>
 
 <script>
-import Rooms from '../components/Rooms'
 import QuestionCard from '../components/QuestionCard'
 import Result from '../components/Result'
 import socket from '../config/socket'
@@ -43,7 +38,7 @@ import socket from '../config/socket'
 export default {
   name: 'Dashboard',
   components: {
-    QuestionCard, Result, Rooms
+    QuestionCard, Result
   },
   data () {
     return {
@@ -126,6 +121,10 @@ export default {
 }
 </script>
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=Pangolin&display=swap');
+  #dashboardPage {
+    font-family: Pangolin;
+  }
   ul li {
     font-family: 'Roboto';
   }

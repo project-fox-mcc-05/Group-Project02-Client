@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container center">
     <h2>Result</h2>
     <div v-for="(user,i) in users" :key="i">
       <p v-if="user.name">{{ user.name }} ===> {{ user.score }}</p>

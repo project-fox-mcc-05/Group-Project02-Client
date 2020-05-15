@@ -3,11 +3,11 @@
     <div class="card bg-white text-dark">
       <div class="row">
         <div class="col center">
-          <h3 class="text-center">{{ question.id }}</h3>
-          <div class="col center">
+          <h2 class="text-center text-white">{{ question.id }}</h2>
+          <div class="col d-flex justify-content-center">
             <img v-if="question.image" :src="question.image" alt="">
           </div>
-          <p class="text-center">{{ question.question}}</p>
+          <h4 class="text-center text-white">{{ question.question}}</h4>
         </div>
       </div>
       <div>
@@ -37,8 +37,8 @@
         </div>
       </div>
       <div v-if="isFinish === true">
-        <p class="text-center">Jawaban: </p>
-        <p class="text-center"> {{ trueAnswer.option}} - {{trueAnswer.text}} </p>
+        <p class="text-center text-white">Jawaban: </p>
+        <p class="text-center text-white"> {{ trueAnswer.option}} - {{trueAnswer.text}} </p>
         <div v-if="currentQuestionNumber == 9">
           <button class="btn btn-lg btn-success btn-block text-white" @click.prevent="showResult">Liat Hasil</button>
         </div>
